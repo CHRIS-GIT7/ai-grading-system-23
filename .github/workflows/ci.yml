@@ -19,6 +19,7 @@ jobs:
         with:
           node-version: 18
           cache: 'npm'
+          # This tells GitHub to look inside the backend folder
           cache-dependency-path: 'backend/package-lock.json'
       - name: Install backend dependencies
         run: npm install
@@ -39,6 +40,7 @@ jobs:
         with:
           node-version: 18
           cache: 'npm'
+          # This tells GitHub to look inside the frontend folder
           cache-dependency-path: 'frontend/package-lock.json'
       - name: Install frontend dependencies
         run: npm install
@@ -46,5 +48,3 @@ jobs:
         run: npm run lint
       - name: Build frontend
         run: npm run build
-
-        #to trigger changes
