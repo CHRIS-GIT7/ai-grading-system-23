@@ -1,12 +1,47 @@
-body { font-family: Inter, Arial, sans-serif; margin: 0; padding: 0; background: #f7f8fb; color:#111; }
-.sidebar { width:260px; background: linear-gradient(180deg, #003366, #02263a); color: #fff; padding: 20px; box-shadow: 2px 0 12px rgba(0,0,0,0.06); position:fixed; inset:0 auto 0 0; }
-.content { margin-left:260px; padding: 20px; }
-.topbar { height:64px; display:flex; align-items:center; justify-content:space-between; padding: 0 20px; background: rgba(255,255,255,0.02); border-radius: 8px; }
-.card { background: #fff; padding: 16px; border-radius: 12px; box-shadow: 0 6px 18px rgba(3,10,30,0.06); margin-bottom: 16px; }
-.table { width: 100%; border-collapse: collapse; }
-.table th, .table td { padding: 8px; border-bottom: 1px solid #e6edf3; text-align: left; }
-.btn { padding: 8px 12px; border-radius: 6px; background: #003366; color: #fff; border: none; cursor: pointer; }
-.btn.secondary { background: #D4AF37; color: #072026 }
-.textarea { width: 100%; min-height: 140px; }
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@media (max-width: 900px) { .sidebar { width:72px; } .content { margin-left:72px; } }
+@layer base {
+  body {
+    @apply font-sans antialiased bg-slate-50 text-slate-900;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-white rounded-xl shadow-sm border border-slate-200 p-6;
+  }
+  
+  .btn {
+    @apply px-4 py-2 rounded-lg font-medium transition-all duration-200 cursor-pointer border-none;
+  }
+  
+  .btn-primary {
+    @apply bg-primary text-white hover:bg-primary-light hover:shadow-md;
+  }
+  
+  .btn-secondary {
+    @apply bg-accent text-slate-900 hover:bg-amber-500 hover:shadow-md;
+  }
+  
+  .btn-outline {
+    @apply bg-transparent border-2 border-primary text-primary hover:bg-primary hover:text-white;
+  }
+  
+  .input {
+    @apply w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all;
+  }
+  
+  .table {
+    @apply w-full border-collapse;
+  }
+  
+  .table th {
+    @apply px-4 py-3 text-left text-sm font-semibold text-slate-700 bg-slate-50 border-b border-slate-200;
+  }
+  
+  .table td {
+    @apply px-4 py-3 text-sm text-slate-600 border-b border-slate-100;
+  }
+}
