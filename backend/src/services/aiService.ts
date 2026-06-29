@@ -1,4 +1,4 @@
-import { Configuration, OpenAIApi } from 'openai';
+import OpenAI from 'openai';
 
 type GradeRequest = {
   prompt?: string;
@@ -137,8 +137,7 @@ export async function gradeAnswer(payload: GradeRequest) {
 
   const local = await gradeWithNLP(payload);
   try {
-    const cfg = new Configuration({ apiKey: key });
-    const client = new OpenAIApi(cfg);
+    const client = new OpenAI({ apiKey: key });
 
     const system = `You are an experienced university lecturer and grading assistant. Given a model answer and a student's answer, produce:\n1) A short \"feedback\" paragraph of at most 150 words.\n2) 3 bullet strengths.\n3) 3 bullet weaknesses.\n4) A JSON object with keys: suggestedScore (number 0-100) and feedback (string), strengths (string[]), weaknesses (string[]). Do NOT print anything else.`;
 
@@ -147,9 +146,9 @@ export async function gradeAnswer(payload: GradeRequest) {
       `LocalMetrics:\nsimilarity=${local.similarity}%, keywordMatch=${local.keywordMatchRatio}%, localScore=${local.score}\n`
     ].join('\n');
 
-    const resp = await client.createChatCompletion({ model: 'gpt-4o-mini', messages: [ { role: 'system', content: system }, { role: 'user', content } ], max_tokens: 400, temperature: 0.2 });
+    const resp = await client.chat.completions.create({ model: 'gpt-4o-mini', messages: [ { role: 'system', content: system }, { role: 'user', content } ], max_tokens: 400, temperature: 0.2 });
 
-    const out = resp.data.choices?.[0].message?.content || '';
+    const out = resp.choices?.[0].message?.content || '';
     const jsonMatch = out.match(/\{[\s\S]*\}/);
     if (jsonMatch) {
       try {

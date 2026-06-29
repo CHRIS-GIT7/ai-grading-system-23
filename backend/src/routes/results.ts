@@ -4,7 +4,12 @@ const router = express.Router();
 const prisma = new PrismaClient();
 
 router.get('/', async (req, res) => {
-  const results = await prisma.result.findMany({ include: { student: true, exam: { include: { course: true }}}});
+  const { studentId } = req.query;
+  const filter = studentId ? { studentId: Number(studentId) } : {};
+  const results = await prisma.result.findMany({ 
+    where: filter,
+    include: { student: true, exam: { include: { course: true }}}
+  });
   res.json(results);
 });
 

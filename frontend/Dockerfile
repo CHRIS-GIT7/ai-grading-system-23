@@ -1,7 +1,9 @@
 FROM node:18-alpine
 WORKDIR /app
-COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
+COPY package.json package-lock.json ./
+RUN npm install
 COPY . .
-EXPOSE 3000
-CMD ["yarn", "dev", "--host"]
+ARG VITE_API_BASE=http://localhost:4001/api
+ENV VITE_API_BASE=$VITE_API_BASE
+EXPOSE 5173
+CMD ["npm", "run", "dev", "--", "--host"]
