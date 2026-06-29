@@ -18,9 +18,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18
-          cache: 'npm'
-          # This tells GitHub to look inside the backend folder
-          cache-dependency-path: 'backend/package-lock.json'
+          # Removed 'cache' to bypass the resolution error entirely
       - name: Install backend dependencies
         run: npm install
       - name: Run backend lint
@@ -39,9 +37,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18
-          cache: 'npm'
-          # This tells GitHub to look inside the frontend folder
-          cache-dependency-path: 'frontend/package-lock.json'
+          # Removed 'cache' to bypass the resolution error entirely
       - name: Install frontend dependencies
         run: npm install
       - name: Run frontend lint
