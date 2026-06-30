@@ -40,8 +40,8 @@ COPY --from=build /app/node_modules ./node_modules
 
 # Force the environment variables directly here
 # Replace the placeholders with your actual strings (without the quotes)
-ENV DATABASE_URL=postgresql://postgres:YOUR_PASSWORD_HERE@aws-0-eu-west-1.pooler.supabase.com:6543/postgres?pgbouncer=true
-ENV DIRECT_URL=postgresql://postgres:YOUR_PASSWORD_HERE@db.ccetgfdwvabtjbapmwxe.supabase.co:5432/postgres
+ENV DATABASE_URL=postgresql://postgres:MyNewPassword1234567891@aws-0-eu-west-1.pooler.supabase.com:6543/postgres?pgbouncer=true
+ENV DIRECT_URL=postgresql://postgres:MyNewPassword1234567891@db.ccetgfdwvabtjbapmwxe.supabase.co:5432/postgres
 
 EXPOSE 4000
 CMD ["sh", "-c", "npx prisma migrate deploy && node dist/index.js"]
