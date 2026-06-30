@@ -1,10 +1,17 @@
 FROM node:18-alpine AS build
 WORKDIR /app
 RUN apk add --no-cache openssl
+
+# Add these lines to accept variables from Railway
+ARG DATABASE_URL
+ARG DIRECT_URL
+ENV DATABASE_URL=$DATABASE_URL
+ENV DIRECT_URL=$DIRECT_URL
+
 COPY package.json package-lock.json ./
 RUN npm install
 COPY . .
-RUN npm run prisma:generate
+RUN npx prisma generate
 RUN npm run build
 
 FROM node:18-alpine AS runtime
