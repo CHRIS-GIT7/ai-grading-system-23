@@ -23,13 +23,6 @@
 FROM node:18-alpine AS build
 WORKDIR /app
 RUN apk add --no-cache openssl
-
-# Add these lines to make build-time variables available
-ARG DATABASE_URL
-ARG DIRECT_URL
-ENV DATABASE_URL=$DATABASE_URL
-ENV DIRECT_URL=$DIRECT_URL
-
 COPY package.json package-lock.json ./
 RUN npm install
 COPY . .
@@ -44,7 +37,11 @@ COPY --from=build /app/package-lock.json ./
 COPY --from=build /app/dist ./dist
 COPY --from=build /app/prisma ./prisma
 COPY --from=build /app/node_modules ./node_modules
-ENV NODE_ENV=production
+
+# Force the environment variables directly here
+# Replace the placeholders with your actual strings (without the quotes)
+ENV DATABASE_URL=postgresql://postgres:YOUR_PASSWORD_HERE@aws-0-eu-west-1.pooler.supabase.com:6543/postgres?pgbouncer=true
+ENV DIRECT_URL=postgresql://postgres:YOUR_PASSWORD_HERE@db.ccetgfdwvabtjbapmwxe.supabase.co:5432/postgres
+
 EXPOSE 4000
-# Ensure migrations use the variables at runtime
 CMD ["sh", "-c", "npx prisma migrate deploy && node dist/index.js"]
